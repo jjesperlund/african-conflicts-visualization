@@ -1,0 +1,36 @@
+
+body {
+    background-color: #333333;
+}
+
+html,body,.col-md-12,.row {
+    height:97.8%;
+}
+
+#container > div {
+    height:100%;
+}
+
+#navbar {
+    height: 10%;
+    border: 1px solid;
+    
+}
+#navbar h1 {
+    padding: 1% 0% 0% 2%;
+    color: #e6f3ff;
+    font-family: Trebuchet MS, sans-serif;
+}
+
+#container .col-sm-1 {
+border: 1px solid #e6f3ff;
+border-radius: 7px;
+}
+#container .col-sm-8 {
+    border: 1px solid #e6f3ff;
+    border-radius: 7px;
+}
+#container .col-sm-3 { 
+    border: 1px solid #e6f3ff;
+    border-radius: 7px;
+}

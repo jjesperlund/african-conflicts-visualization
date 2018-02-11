@@ -1,0 +1,18 @@
+
+#map-vis {
+    margin: 0% 0% 0% 0%;
+    background-color: #333333;
+}
+
+#map {
+    padding: 0;
+}
+
+path {
+    stroke: #333333;
+    stroke-width: 0.5px;    
+}
+
+.country {
+    fill: #66b3ff;
+}
