@@ -67,7 +67,7 @@ function Map(data, world_map_json) {
             .attr("id", function(d){ return d.id })
             .on("mousemove", function (d) {
                 d3.select(this)
-                .style("fill", 'red');                
+                .style("fill", '#4485c4');                
             })
             .on('mouseout',function(d){
                 d3.select(this)
@@ -111,11 +111,12 @@ function Map(data, world_map_json) {
             }))
             .style("fill", "red")
             .style("opacity", "0.3")
+            .style("stroke", "none")
             .on("mousemove", function (d) {
                 //var cur_mag = d3.select("#slider").property("value");
                 d3.select(this)
                 .style('opacity',1)
-                .style("stroke", 'red');
+                .style("stroke", 'none');
                 
             })
             .on('mouseout',function(d){

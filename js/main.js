@@ -9,19 +9,26 @@ queue()
 .defer(d3.json,'data/world-topo.json')
 .await(render);
 
-var map;
 
 function render(error, data, africa_countries, world_map_json) {
 
     if(error)
         throw error;
+    
+    world_map_json.objects.countries.geometries = filterTopoJson(world_map_json.objects.countries.geometries, africa_countries);
 
-    //Parse data dates
+    //Create new geo visualization 
+    var map = new Map( parseData(data), world_map_json );
+
+}
+
+function parseData(data){
+
+    var filteredData = [];
+
+    //Parse dates
     var format = d3.timeParse("%Y-%m-%d");
 
-    var filteredData = [],
-        selected_countries = [];
-    
     //Parse some data parameters
     data.forEach(function(d){
         filteredData.push({
@@ -39,20 +46,24 @@ function render(error, data, africa_countries, world_map_json) {
         });
     });
 
+    return filteredData;
+}
+
+function filterTopoJson( map, africa_countries ) {
+
+    var selected_countries = [];
+
     //Manually filtering TopoJSON file by african countries
-    for(let i = 0; i < world_map_json.objects.countries.geometries.length; i++) {
+    for(let i = 0; i < map.length; i++) {
 
         africa_countries.forEach(function(c){
-            if(world_map_json.objects.countries.geometries[i].properties.name == c.Country) {
-                selected_countries.push(world_map_json.objects.countries.geometries[i]);
+            if(map[i].properties.name == c.Country) {
+                selected_countries.push(map[i]);
                 return;
             }
         });
     }
 
-    world_map_json.objects.countries.geometries = selected_countries;
-
-    //Create new geo visualization
-    map = new Map(filteredData, world_map_json);
+    return selected_countries;
 
 }
