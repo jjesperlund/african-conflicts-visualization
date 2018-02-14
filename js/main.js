@@ -19,6 +19,7 @@ function render(error, data, africa_countries, world_map_json) {
 
     //Create new geo visualization 
     var map = new Map( parseData(data), world_map_json );
+    var barchart = new Barchart();
 
 }
 

@@ -16,3 +16,16 @@ path {
 .country {
     fill: #66b3ff;
 }
+
+#map img {
+    width: 40px;
+    height: 40px;
+    float: right;
+}
+
+#map img:hover {
+    cursor: pointer;
+}
+
+
+  

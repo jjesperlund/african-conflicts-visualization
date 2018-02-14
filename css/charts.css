@@ -1,0 +1,10 @@
+
+#piechart {
+    position: fixed;
+    bottom: 0;
+}
+
+#barchart {
+    position:fixed;
+    margin-top: 2%;
+}

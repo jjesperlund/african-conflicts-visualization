@@ -1,6 +1,12 @@
 
+
 body {
     background-color: #333333;
+    -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
+    -moz-animation: fadein 2s; /* Firefox < 16 */
+    -ms-animation: fadein 2s; /* Internet Explorer */
+    -o-animation: fadein 2s; /* Opera < 12.1 */
+    animation: fadein 2s;
 }
 
 html,body,.col-md-12,.row {
@@ -20,17 +26,73 @@ html,body,.col-md-12,.row {
     padding: 1% 0% 0% 2%;
     color: #e6f3ff;
     font-family: Trebuchet MS, sans-serif;
+    float:left;
 }
 
+#navbar h2 {
+    padding: 1% 5% 0% 0%;
+    color: #e6f3ff;
+    font-family: Trebuchet MS, sans-serif;
+    float:right;
+}
+
+#info {
+    /*border: 1px solid white;*/
+    height: 15%;
+    width: 100%;
+    margin-top: 1%;
+    color: #e6f3ff;
+    font-family: Trebuchet MS, sans-serif;
+    font-size: 15px;
+    overflow-y: scroll;
+     
+}
+
+/*
 #container .col-sm-1 {
 border: 1px solid #e6f3ff;
 border-radius: 7px;
 }
-#container .col-sm-8 {
+#container .col-sm-7 {
     border: 1px solid #e6f3ff;
     border-radius: 7px;
 }
-#container .col-sm-3 { 
+#container .col-sm-4 { 
     border: 1px solid #e6f3ff;
     border-radius: 7px;
+}
+*/
+
+
+@keyframes fadein {
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+@-moz-keyframes fadein { /* Firefox */
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+@-webkit-keyframes fadein { /* Safari and Chrome */
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+@-o-keyframes fadein { /* Opera */
+    from {
+        opacity:0;
+    }
+    to {
+        opacity: 1;
+    }
 }

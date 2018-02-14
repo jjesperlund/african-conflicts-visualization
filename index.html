@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">  
   <link rel="stylesheet" href="./css/index.css">
   <link rel="stylesheet" href="./css/map.css">
+  <link rel="stylesheet" href="./css/charts.css">
 
 </head>
 <body>
@@ -16,16 +17,21 @@
     <div class="col-md-12">
         <div class="row" id="navbar">
             <h1>Conflicts in Africa 2018</h1>
+            <h2 id="country-name"></h2>
         </div>
         <div class="row" id="container">
-            <div class="col-sm-1" id="gui">
-                
+
+            <div class="col-sm-1" id="gui"></div>
+
+            <div class="col-sm-7" id="map">            
+                <img id="cancel-selection" src="images/cancel.png">
             </div>
-            <div class="col-sm-8" id="map">
-               
-            </div>
-            <div class="col-sm-3" id="charts">
-                
+
+            <div class="col-sm-4" id="charts">
+                <p id="info"></p>
+                <canvas id="barchart" width="400" height="300"></canvas>
+                <canvas id="piechart" width="400" height="300"></canvas>
+
             </div>
         </div>
     </div>
@@ -37,10 +43,14 @@
     <script src="http://d3js.org/topojson.v2.min.js"></script>
     <script src="./lib/queue.js" type='text/javascript'></script>
     <script src="./lib/colorbrewer.js" type='text/javascript'></script>
+    <script src="./lib/chart.min.js" type='text/javascript'></script>
+    
 
     <!-- Modules -->
     <script src="js/main.js" type="text/javascript"></script>
     <script src ="js/map.js" type="text/javascript"></script>
+    <script src ="js/barchart.js" type="text/javascript"></script>
+
 
 
 </body>

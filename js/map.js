@@ -1,8 +1,6 @@
 
 function Map(data, world_map_json) {
 
-    //console.log(data)
-
     var div = "#map";
 
     //Scale map correctly on window resize
@@ -38,20 +36,13 @@ function Map(data, world_map_json) {
 
     var g = svg.append("g");
 
+    $('#cancel-selection').on('click', cancelSelection);
+
     //Formats the data in a feature collection trougth geoFormat()
     var geoData = {type: "FeatureCollection", features: geoFormat(data)};
 
     var countries_features = topojson.feature(world_map_json,
             world_map_json.objects.countries).features;
-
-        //console.log(topojson.feature(world_map_json,
-         //   world_map_json.objects.countries).features)
-
-            /*
-        countries_features = countries_features.filter(function(d){
-            return d.properties.name == "Australia"
-        })
-        */
 
     var countries = g.selectAll(".country").data(countries_features);
 
@@ -73,6 +64,9 @@ function Map(data, world_map_json) {
                 d3.select(this)
                 .style("fill", '#66b3ff');
 
+            })
+            .on('click', function(d){
+                document.getElementById('country-name').innerHTML = d.properties.name;
             });
 
     }
@@ -90,7 +84,10 @@ function Map(data, world_map_json) {
                     "type": "Point",
                 },
                 "fatalities": d.fatalities,
-                "location": d.location 
+                "location": d.location,
+                "country": d.country,
+                "description": d.description,
+                "event_type": d.event_type
             });
         });
 
@@ -104,26 +101,41 @@ function Map(data, world_map_json) {
 
         point.enter().append("path")
             .attr("class", "point")
+            .attr("id", function(d){ return d.country })
             .attr("d", path)
             .attr("d", path.pointRadius(function (d) {
-                //return d.fatalities;
-                return 4;
+
+                //Mapping radius values to 5 to 13
+                return 5 + ( ( (d.fatalities - 0)*(13-5) ) /
+                (15 - 0));;
+
             }))
             .style("fill", "red")
             .style("opacity", "0.3")
             .style("stroke", "none")
             .on("mousemove", function (d) {
-                //var cur_mag = d3.select("#slider").property("value");
-                d3.select(this)
-                .style('opacity',1)
-                .style("stroke", 'none');
-                
+                //d3.select(this)
+                //.style('opacity',1);               
             })
             .on('mouseout',function(d){
-                d3.select(this)
-                .style('opacity', 0.3)
-                .style("stroke", 'none');
 
+                //d3.select(this)
+                   // .style('opacity', 0.3)
+                    //.style("stroke", 'none');
+
+            })
+            .on('click', function(d){
+                document.getElementById('info').innerHTML = 
+                "<p><b>Location:</b> " + d.location + ", " + d.country  + ". </p>" 
+                + "<p><b>Conflict Type:</b> " + d.event_type + "</p>" +
+                "<p><b>Fatalities:</b> " + d.fatalities + "</br></p>" 
+                + "<p>" + d.description + "</p>";
+
+                d3.select(this)
+                    .attr("id", "selected")
+                    .style('opacity', 1)
+                    .style("stroke", 'black')
+                    .style("stroke-width", "4");
             });
 
     }
@@ -136,6 +148,13 @@ function Map(data, world_map_json) {
     function sizeChange() {
 	    d3.select("g").attr("transform", "scale(" + $("#container").width()/1700 + ")");
 	    $("svg").height($("#container").width()*0.618);
-	}
+    }
+    
+    function cancelSelection() {
+        d3.selectAll('.point')
+            .attr("id", "not-selected")
+            .style('opacity', 0.3)
+            .style("stroke", 'none');
+    }
 
 }
