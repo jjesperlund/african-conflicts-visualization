@@ -1,6 +1,10 @@
 
+html {
+    height: 100%;
+}
 
 body {
+    height: 100%;
     background-color: #333333;
     -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
     -moz-animation: fadein 2s; /* Firefox < 16 */
@@ -10,7 +14,7 @@ body {
 }
 
 html,body,.col-md-12,.row {
-    height:97.8%;
+    height:97.5%;
 }
 
 #container > div {
@@ -19,7 +23,8 @@ html,body,.col-md-12,.row {
 
 #navbar {
     height: 10%;
-    border: 1px solid;
+    border-bottom: 4px solid rgba(0, 0, 0, 0.3);
+    border-style: double;
     
 }
 #navbar h1 {
@@ -38,7 +43,7 @@ html,body,.col-md-12,.row {
 
 #info {
     /*border: 1px solid white;*/
-    height: 15%;
+    height: auto;
     width: 100%;
     margin-top: 1%;
     color: #e6f3ff;
@@ -48,20 +53,20 @@ html,body,.col-md-12,.row {
      
 }
 
-/*
+
+
 #container .col-sm-1 {
-border: 1px solid #e6f3ff;
-border-radius: 7px;
+    
 }
 #container .col-sm-7 {
-    border: 1px solid #e6f3ff;
-    border-radius: 7px;
+    border-right: 4px solid rgba(0, 0, 0, 0.3);
+    border-style: double;
 }
 #container .col-sm-4 { 
-    border: 1px solid #e6f3ff;
-    border-radius: 7px;
+    
 }
-*/
+
+
 
 
 @keyframes fadein {

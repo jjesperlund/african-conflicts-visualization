@@ -9,6 +9,7 @@ queue()
 .defer(d3.json,'data/world-topo.json')
 .await(render);
 
+var charts, map;
 
 function render(error, data, africa_countries, world_map_json) {
 
@@ -18,8 +19,8 @@ function render(error, data, africa_countries, world_map_json) {
     world_map_json.objects.countries.geometries = filterTopoJson(world_map_json.objects.countries.geometries, africa_countries);
 
     //Create new geo visualization 
-    var map = new Map( parseData(data), world_map_json );
-    var barchart = new Barchart();
+    map = new Map( parseData(data), world_map_json );
+    charts = new Charts();
 
 }
 

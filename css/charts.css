@@ -1,10 +1,25 @@
 
-#piechart {
-    position: fixed;
+#wrapper {
+    position: absolute;
     bottom: 0;
+    width: 300px;
+    padding: 10% 5% 3% 5%;
+}
+
+#charts {
+    align: center;
+}
+
+#piechart {
+    display: inline-block;
+    vertical-align: bottom;
+    margin: auto;
+    padding-top: 10%;
+    width: 90%;
 }
 
 #barchart {
-    position:fixed;
-    margin-top: 2%;
+    display: inline-block;
+    vertical-align: bottom;
+    width: 90%;
 }

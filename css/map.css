@@ -1,11 +1,11 @@
 
 #map-vis {
-    margin: 0% 0% 0% 0%;
     background-color: #333333;
 }
 
 #map {
     padding: 0;
+    z-index: 1;
 }
 
 path {
@@ -15,12 +15,16 @@ path {
 
 .country {
     fill: #66b3ff;
+    opacity: 0.8;
 }
 
 #map img {
     width: 40px;
     height: 40px;
-    float: right;
+    right: 0;
+    opacity: 0.8;
+    position: absolute;
+    z-index: 2;
 }
 
 #map img:hover {

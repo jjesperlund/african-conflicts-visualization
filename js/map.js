@@ -1,6 +1,8 @@
 
 function Map(data, world_map_json) {
 
+    //console.log(data);   
+
     var div = "#map";
 
     //Scale map correctly on window resize
@@ -22,7 +24,7 @@ function Map(data, world_map_json) {
         .style("opacity", 0);
 
     var projection = d3.geoMercator()
-        .center([10, 30])
+        .center([10, 20])
         .scale(650);
 
     var path = d3.geoPath()
@@ -55,7 +57,10 @@ function Map(data, world_map_json) {
             .insert("path")
             .attr("class", "country")
             .attr("d", path)
-            .attr("id", function(d){ return d.id })
+            .attr("id", function(d){ 
+                d.properties.name = checkCountry(d.properties.name);
+                return d.properties.name })
+            /*
             .on("mousemove", function (d) {
                 d3.select(this)
                 .style("fill", '#4485c4');                
@@ -65,9 +70,18 @@ function Map(data, world_map_json) {
                 .style("fill", '#66b3ff');
 
             })
+            */
             .on('click', function(d){
+                
+                cancelSelection();
                 document.getElementById('country-name').innerHTML = d.properties.name;
-            });
+                d3.select(this) 
+                    .style("stroke", "black")
+                    .style("stroke-width", "2")
+                    .style("fill", '#4485c4'); 
+
+                createCharts( this.id );
+            });            
 
     }
 
@@ -86,8 +100,10 @@ function Map(data, world_map_json) {
                 "fatalities": d.fatalities,
                 "location": d.location,
                 "country": d.country,
+                "date": d.date,
                 "description": d.description,
-                "event_type": d.event_type
+                "event_type": d.event_type,
+                "actor": d.actor
             });
         });
 
@@ -125,18 +141,35 @@ function Map(data, world_map_json) {
 
             })
             .on('click', function(d){
-                document.getElementById('info').innerHTML = 
-                "<p><b>Location:</b> " + d.location + ", " + d.country  + ". </p>" 
-                + "<p><b>Conflict Type:</b> " + d.event_type + "</p>" +
-                "<p><b>Fatalities:</b> " + d.fatalities + "</br></p>" 
-                + "<p>" + d.description + "</p>";
+
+                cancelSelection();
+                printInfo(d);                
 
                 d3.select(this)
-                    .attr("id", "selected")
                     .style('opacity', 1)
+                    .style('fill', '#37cc43')
                     .style("stroke", 'black')
-                    .style("stroke-width", "4");
+                    .style("stroke-width", "3");
+
             });
+
+    }
+
+    function createCharts( country ) {
+
+        var filterdData = [];
+
+        var dd = d3.selectAll(".point[id='" + country + "']")
+            .style("opacity", function(d){
+                filterdData.push(d);
+                return "1";
+            });
+        
+
+
+        //Create barchart with selected country data
+        charts.createBarchart( filterdData );
+        charts.createPiechart( filterdData );
 
     }
 
@@ -152,9 +185,51 @@ function Map(data, world_map_json) {
     
     function cancelSelection() {
         d3.selectAll('.point')
-            .attr("id", "not-selected")
             .style('opacity', 0.3)
+            .style('fill', 'red')
             .style("stroke", 'none');
+
+        d3.selectAll('.country')
+            .style("fill", "#66b3ff")
+            .style("stroke-width", "0.5");
+
+        document.getElementById('info').innerHTML = ""; 
+        document.getElementById('country-name').innerHTML = ""; 
+
+    }
+
+    function printInfo(d) {
+                
+        document.getElementById('info').innerHTML = 
+            "<p><b>Location:</b> " + d.location + ", " + d.country  + ". </p>" +
+            "<p><b>Date: </b>" + d.date.toString().substr(0,16) + "</p>"
+            + "<p><b>Conflict Type:</b> " + d.event_type + "</p>" +
+            "<p><b>Fatalities:</b> " + d.fatalities + "</br></p>" 
+            + "<p>" + d.description + "</p>";
+
+    }
+
+
+    function checkCountry(country){
+        
+        switch(country){
+
+            case 'Congo, the Democratic Republic of the' : 
+                country = 'Democratic Republic of Congo';
+                break;
+            case 'Tanzania, United Republic of' : 
+                country = 'Tanzania';
+                break;
+            case "Côte d'Ivoire" :
+                country = 'Ivory Coast';
+                break;
+                 
+            default: break;
+
+
+        }
+        return country;
+
     }
 
 }
