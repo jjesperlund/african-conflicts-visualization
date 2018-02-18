@@ -10,12 +10,16 @@
     align: center;
 }
 
+#country-name {
+    color: white;
+}
+
 #piechart {
     display: inline-block;
     vertical-align: bottom;
     margin: auto;
     padding-top: 10%;
-    width: 90%;
+    width: 75%;
 }
 
 #barchart {

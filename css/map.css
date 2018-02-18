@@ -18,18 +18,30 @@ path {
     opacity: 0.8;
 }
 
-#map img {
+#cancel-selection {
     width: 40px;
     height: 40px;
     right: 0;
-    opacity: 0.8;
+    opacity: 0;
+    background-color:rgba(255, 0, 0, 0.644);
+    border-radius: 5px;
     position: absolute;
     z-index: 2;
+}
+
+#cancel-selection:hover {
+    cursor: pointer;
+    background-color:red;
+}
+
+p.glyphicon-remove {
+    font-size: 40px;
 }
 
 #map img:hover {
     cursor: pointer;
 }
+
 
 
   

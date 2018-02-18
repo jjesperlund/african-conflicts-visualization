@@ -1,7 +1,5 @@
 
-function Map(data, world_map_json) {
-
-    //console.log(data);   
+function Map(data, world_map_json) {     
 
     var div = "#map";
 
@@ -24,8 +22,8 @@ function Map(data, world_map_json) {
         .style("opacity", 0);
 
     var projection = d3.geoMercator()
-        .center([10, 20])
-        .scale(650);
+        .center([20, 20])
+        .scale(600);
 
     var path = d3.geoPath()
         .projection(projection);
@@ -38,8 +36,6 @@ function Map(data, world_map_json) {
 
     var g = svg.append("g");
 
-    $('#cancel-selection').on('click', cancelSelection);
-
     //Formats the data in a feature collection trougth geoFormat()
     var geoData = {type: "FeatureCollection", features: geoFormat(data)};
 
@@ -47,6 +43,19 @@ function Map(data, world_map_json) {
             world_map_json.objects.countries).features;
 
     var countries = g.selectAll(".country").data(countries_features);
+
+    //User filtering in GUI
+    document.getElementById("filter").onclick = function(){
+        var actor_type = document.getElementById("actors").value;
+        console.log(actor_type);
+    }
+
+    //Cancel selection button
+    document.getElementById('cancel-selection').onclick = function(){
+        cancelSelection();
+        clearCharts();
+        this.style.opacity = 0;
+    }
 
     draw(countries);
     drawPoints()
@@ -74,6 +83,7 @@ function Map(data, world_map_json) {
             .on('click', function(d){
                 
                 cancelSelection();
+                document.getElementById('cancel-selection').style.opacity = 1;
                 document.getElementById('country-name').innerHTML = d.properties.name;
                 d3.select(this) 
                     .style("stroke", "black")
@@ -106,7 +116,7 @@ function Map(data, world_map_json) {
                 "actor": d.actor
             });
         });
-
+        
         return data;
     }
 
@@ -122,8 +132,8 @@ function Map(data, world_map_json) {
             .attr("d", path.pointRadius(function (d) {
 
                 //Mapping radius values to 5 to 13
-                return 5 + ( ( (d.fatalities - 0)*(13-5) ) /
-                (15 - 0));;
+                return 5 + ( ( (d.fatalities - 0)*(50-5) ) /
+                (512 - 0));;
 
             }))
             .style("fill", "red")
@@ -143,6 +153,7 @@ function Map(data, world_map_json) {
             .on('click', function(d){
 
                 cancelSelection();
+                clearCharts();
                 printInfo(d);                
 
                 d3.select(this)
@@ -164,8 +175,6 @@ function Map(data, world_map_json) {
                 filterdData.push(d);
                 return "1";
             });
-        
-
 
         //Create barchart with selected country data
         charts.createBarchart( filterdData );
@@ -207,6 +216,11 @@ function Map(data, world_map_json) {
             "<p><b>Fatalities:</b> " + d.fatalities + "</br></p>" 
             + "<p>" + d.description + "</p>";
 
+    }
+
+    function clearCharts() {
+        document.getElementById('barchart').remove();  
+        document.getElementById('piechart').remove();  
     }
 
 

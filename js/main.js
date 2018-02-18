@@ -4,7 +4,7 @@
  */
 
 queue()
-.defer(d3.csv,'data/africa_2018.csv')
+.defer(d3.csv,'data/africa_1.csv')
 .defer(d3.csv, 'data/africa_countries.csv')
 .defer(d3.json,'data/world-topo.json')
 .await(render);
@@ -36,7 +36,7 @@ function parseData(data){
         filteredData.push({
             "lat": +d.latitude,
             "lon": +d.longitude,
-            "actor": d.actor1,
+            "actor": d.actor2,
             "country": d.country,
             "id": +d.data_id,
             "date": format(d.event_date),

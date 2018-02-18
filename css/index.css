@@ -28,17 +28,22 @@ html,body,.col-md-12,.row {
     
 }
 #navbar h1 {
-    padding: 1% 0% 0% 2%;
+    top: 3%;
+    padding-left: 2%;
     color: #e6f3ff;
     font-family: Trebuchet MS, sans-serif;
     float:left;
 }
 
-#navbar h2 {
-    padding: 1% 5% 0% 0%;
+#gui {
+    padding-top: 2%;
+}
+
+#gui p {
+    font-size: 17px;
     color: #e6f3ff;
     font-family: Trebuchet MS, sans-serif;
-    float:right;
+    text-align: center;
 }
 
 #info {
@@ -53,20 +58,86 @@ html,body,.col-md-12,.row {
      
 }
 
+/* Search bar */
+.search {
+    width: 100%;
+    position: relative
+  }
+  
+.searchTerm {
+    float: left;
+    width: 100%;
+    border: 2px solid #66b3ff;
+    padding: 5px;
+    height: 36px;
+    border-radius: 5px;
+    outline: none;
+    color: #9DBFAF;
+}
 
+.searchTerm:focus{
+    color: #000000;
+}
 
-#container .col-sm-1 {
+.searchButton {
+    position: absolute;  
+    right: -50px;
+    width: 40px;
+    height: 36px;
+    border: 1px solid #66b3ff;
+    background: #66b3ff;
+    text-align: center;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+/*Resize the wrap to see the search bar change!*/
+.wrap{
+    width: 20%;
+    position: absolute;
+    top: 3%;
+    right: 6%;
+}
+
+/* GUI (user filtering) */
+select {
+    width: auto;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    height: 34px;
+    display:block;
+    margin:auto;
+}
+
+button#filter {
+    width: 80px;
+    height: 30px;
+    background-color: #66b3ffbb;
+    color: white;
+    font-size: 17px;
+    border: none;
+    border-radius: 4px;
+    margin-left: 30%;
+    margin-top: 15%;
+}
+
+button#filter:hover {
+    background-color: #66b3fffb;
+}
+
+#container .col-sm-2 {
     
 }
-#container .col-sm-7 {
+#container .col-sm-6 {
     border-right: 4px solid rgba(0, 0, 0, 0.3);
+    border-left: 4px solid rgba(0, 0, 0, 0.3);
     border-style: double;
 }
 #container .col-sm-4 { 
     
 }
-
-
 
 
 @keyframes fadein {

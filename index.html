@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="./css/index.css">
   <link rel="stylesheet" href="./css/map.css">
   <link rel="stylesheet" href="./css/charts.css">
@@ -16,19 +17,43 @@
 
     <div class="col-md-12">
         <div class="row" id="navbar">
-            <h1>Conflicts in Africa 2018</h1>
-            <h2 id="country-name"></h2>
+            <h1>Conflicts in Africa 2018</h1>    
+            <div class="wrap">
+                <div class="search">
+                   <form id="country-search">
+                   <input type="text" class="searchTerm" placeholder="Search country">
+                   <button type="submit" class="searchButton">
+                     <i class="fa fa-search"></i>
+                  </button>
+                  </form>
+                </div>
+             </div>        
         </div>
         
         <div class="row" id="container">
 
-            <div class="col-sm-1" id="gui"></div>
+            <div class="col-sm-2" id="gui">
+                <p>Filter by actor</p>
+                <select id="actors">
+                    <option value="All actors">All actors</option>
+                    <option value="Terrorist groups">Terrorist groups</option>
+                    <option value="Domestic Military">Domestic Military</option>
+                    <option value="US Military">US Military</option>
+                    <option value="Police Forces">Police Forces</option>
+                    <option value="Militias">Militias</option>
+                    <option value="Protesters">Protesters</option>
+                    <option value="Rioters">Rioters</option>
+                  </select>
 
-            <div class="col-sm-7" id="map">            
-                <img id="cancel-selection" src="images/cancel.png">
+                  <button id="filter">Filter</button>
+            </div>
+
+            <div class="col-sm-6" id="map">            
+                <p class="glyphicon glyphicon-remove" id="cancel-selection"></p>
             </div>
 
             <div class="col-sm-4" id="charts">
+                <h2 id="country-name"></h2>
                 <p id="info"></p>
                 <!-- <div id="wrapper"> -->
                     <canvas id="barchart" width="300" height="270"></canvas>
