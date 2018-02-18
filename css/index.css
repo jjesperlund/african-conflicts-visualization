@@ -31,7 +31,7 @@ html,body,.col-md-12,.row {
     top: 3%;
     padding-left: 2%;
     color: #e6f3ff;
-    font-family: Trebuchet MS, sans-serif;
+    font-family: 'Raleway';
     float:left;
 }
 
@@ -42,7 +42,7 @@ html,body,.col-md-12,.row {
 #gui p {
     font-size: 17px;
     color: #e6f3ff;
-    font-family: Trebuchet MS, sans-serif;
+    font-family: 'Raleway';
     text-align: center;
 }
 
@@ -52,7 +52,7 @@ html,body,.col-md-12,.row {
     width: 100%;
     margin-top: 1%;
     color: #e6f3ff;
-    font-family: Trebuchet MS, sans-serif;
+    font-family: 'Raleway';
     font-size: 15px;
     overflow-y: scroll;
      
