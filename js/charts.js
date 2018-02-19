@@ -5,6 +5,7 @@ function Charts() {
  */
 
     var ctx;
+    Chart.defaults.global.defaultFontFamily = 'Raleway';
 
     this.createBarchart = function( country_data ) {
 

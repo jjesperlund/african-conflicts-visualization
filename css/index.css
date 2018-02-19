@@ -73,6 +73,7 @@ html,body,.col-md-12,.row {
     border-radius: 5px;
     outline: none;
     color: #9DBFAF;
+    font-family: 'Raleway';
 }
 
 .searchTerm:focus{
@@ -109,6 +110,7 @@ select {
     height: 34px;
     display:block;
     margin:auto;
+    font-family: 'Raleway';
 }
 
 button#filter {
@@ -121,6 +123,7 @@ button#filter {
     border-radius: 4px;
     margin-left: 30%;
     margin-top: 15%;
+    font-family: 'Raleway';
 }
 
 button#filter:hover {

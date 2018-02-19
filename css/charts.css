@@ -12,18 +12,18 @@
 
 #country-name {
     color: white;
+    text-align: center;
+    font-family: 'Raleway';
 }
 
 #piechart {
     display: inline-block;
     vertical-align: bottom;
     margin: auto;
-    padding-top: 10%;
-    width: 75%;
 }
 
 #barchart {
     display: inline-block;
     vertical-align: bottom;
-    width: 90%;
+    margin: auto;
 }

@@ -22,7 +22,7 @@ function Map(data, world_map_json) {
         .style("opacity", 0);
 
     var projection = d3.geoMercator()
-        .center([20, 20])
+        .center([25, 20])
         .scale(600);
 
     var path = d3.geoPath()
@@ -136,7 +136,7 @@ function Map(data, world_map_json) {
                 (512 - 0));;
 
             }))
-            .style("fill", "red")
+            .style("fill", "#c12424")
             .style("opacity", "0.3")
             .style("stroke", "none")
             .on("mousemove", function (d) {
@@ -174,7 +174,8 @@ function Map(data, world_map_json) {
             .style("opacity", function(d){
                 filterdData.push(d);
                 return "1";
-            });
+            })
+            .style('fill', "#fc2d2d");
 
         //Create barchart with selected country data
         charts.createBarchart( filterdData );
@@ -195,7 +196,7 @@ function Map(data, world_map_json) {
     function cancelSelection() {
         d3.selectAll('.point')
             .style('opacity', 0.3)
-            .style('fill', 'red')
+            .style('fill', '#c12424')
             .style("stroke", 'none');
 
         d3.selectAll('.country')
