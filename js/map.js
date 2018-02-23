@@ -1,7 +1,5 @@
 
 function Map(data, world_map_json) {     
-
-    console.log(data);
     
     var div = "#map";
     var countryList = [];

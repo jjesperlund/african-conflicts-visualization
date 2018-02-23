@@ -46,7 +46,7 @@ function Charts() {
             ctx.id = 'barchart';
             document.getElementById('charts').appendChild(ctx);
             ctx.width = '400';
-            ctx.height = '280';
+            ctx.height = '300';
 
         }
 

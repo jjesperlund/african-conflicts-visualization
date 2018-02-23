@@ -122,14 +122,14 @@ select {
 }
 
 button#filter {
-    width: 80px;
-    height: 30px;
+    width: 100px;
+    height: 40px;
     background-color: #66b3ffbb;
     color: white;
     font-size: 17px;
     border: none;
     border-radius: 4px;
-    margin-left: 30%;
+    margin-left: 25%;
     margin-top: 15%;
     font-family: 'Raleway';
 }
@@ -139,7 +139,7 @@ button#filter:hover {
 }
 
 #container .col-sm-2 {
-    
+    width: 15%;
 }
 #container .col-sm-6 {
     border-right: 4px solid rgba(0, 0, 0, 0.3);
