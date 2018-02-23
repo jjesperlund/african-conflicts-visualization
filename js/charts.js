@@ -41,22 +41,27 @@ function Charts() {
             document.getElementById('charts').appendChild(ctx);
             ctx.width = w;
             ctx.height = h;
-        } else
-            ctx = document.getElementById("barchart");
+        } else { //If it's not drawn, create a canvas to draw on
+            ctx = document.createElement('canvas');
+            ctx.id = 'barchart';
+            document.getElementById('charts').appendChild(ctx);
+            ctx.width = '400';
+            ctx.height = '280';
+
+        }
 
         if(event_types.length == 0) return;
 
         var barchart = new Chart(ctx, {
             type: 'bar',
             data: {
-                //labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"], //X-axis
                 labels: event_types.map(a => a.event),
                 datasets: [{
                     label: 'Number of events',
                     //data: [12, 19, 3, 5, 2, 3], //Y-axis
                     data: event_types.map(a => a.count),
                     backgroundColor: [
-                        'rgba(255, 99, 132, 0.4)',
+                        'rgba(99, 255, 97, 0.4)',
                         'rgba(54, 162, 235, 0.4)',
                         'rgba(255, 206, 86, 0.4)',
                         'rgba(75, 192, 192, 0.4)',
@@ -64,14 +69,14 @@ function Charts() {
                         'rgba(255, 159, 64, 0.4)'
                     ],
                     borderColor: [
-                        'rgba(255,99,132,1)',
+                        'rgba(99, 255, 97,1)',
                         'rgba(54, 162, 235, 1)',
                         'rgba(255, 206, 86, 1)',
                         'rgba(75, 192, 192, 1)',
                         'rgba(153, 102, 255, 1)',
                         'rgba(255, 159, 64, 1)'
                     ],
-                    borderWidth: 2
+                    borderWidth: 1
                 }]
             },
             options: {              
@@ -167,10 +172,10 @@ function Charts() {
                 datasets: [{
                     data: months.map(a => a.count).reverse(),
                     backgroundColor: [
-                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 97, 231, 0.2)',
                     ],
                     borderColor: [
-                        'rgba(54, 162, 235, 1)'
+                        'rgba(255, 97, 231, 1)'
                     ],
                     borderWidth: 2
                 }],

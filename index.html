@@ -20,8 +20,8 @@
             <h1>Conflicts in Africa Past 6 Months</h1>    
             <div class="wrap">
                 <div class="search">
-                   <form id="country-search">
-                   <input type="text" class="searchTerm" placeholder="Search country">
+                   <form name="f" id="country-search">
+                   <input type="text" class="searchTerm" name="c" placeholder="Search country">
                    <button type="submit" class="searchButton">
                      <i class="fa fa-search"></i>
                   </button>
@@ -35,32 +35,28 @@
             <div class="col-sm-2" id="gui">
                 <p>Filter by actor</p>
                 <select id="actors">
-                    <option value="All actors">All actors</option>
-                    <option value="Terrorist groups">Terrorist groups</option>
-                    <option value="Domestic Military">Domestic Military</option>
-                    <option value="US Military">US Military</option>
+                    <option value="Default">Default</option>
+                    <option value="Military Forces">Military Forces</option>
                     <option value="Police Forces">Police Forces</option>
-                    <option value="Militias">Militias</option>
+                    <option value="Militia">Militias</option>
                     <option value="Protesters">Protesters</option>
                     <option value="Rioters">Rioters</option>
+                    <option value="Civilians">Civilians</option>
                   </select>
 
                   <button id="filter">Filter</button>
             </div>
 
-            <div class="col-sm-6" id="map"> 
-                           
-                <p class="glyphicon glyphicon-remove" id="cancel-selection">
-                </p>
-            </div>
+            <div class="col-sm-6" id="map"></div>
 
             <div class="col-sm-4" id="charts">
+                <p class="glyphicon glyphicon-remove" id="cancel-selection"></p>
+
                 <h2 id="country-name"></h2>
+                <!--<h2 id="info-header"></h2>-->
                 <p id="info"></p>
-                <!-- <div id="wrapper"> -->
                     <canvas id="barchart" width="350" height="270"></canvas>
                     <canvas id="piechart" width="400" height="270"></canvas>
-                <!-- </div> -->
             </div>
         </div>
     </div>

@@ -36,7 +36,7 @@ function parseData(data){
         filteredData.push({
             "lat": +d.latitude,
             "lon": +d.longitude,
-            "actor": d.actor2,
+            "actor": parseActor(d.actor2),
             "country": d.country,
             "id": +d.data_id,
             "date": format(d.event_date),
@@ -49,6 +49,24 @@ function parseData(data){
     });
 
     return filteredData;
+}
+
+function parseActor( actor ) {
+
+    if( actor == undefined)
+        return 'undefined'; 
+
+    let actors = ['Military Forces', 'Police Forces','Militia',
+                  'Protesters', 'Rioters', 'Civilians'];
+
+    for(let i = 0; i < actors.length; i++) {
+        if( actor.includes(actors[i]) ) {
+            return actors[i];
+        }
+    }
+    
+    return actor;
+
 }
 
 function filterTopoJson( map, africa_countries ) {

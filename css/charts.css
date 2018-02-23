@@ -20,6 +20,7 @@
     display: inline-block;
     vertical-align: bottom;
     margin: auto;
+    z-index: 2;
 }
 
 #barchart {

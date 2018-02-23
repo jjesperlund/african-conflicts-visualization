@@ -1,7 +1,10 @@
 
 function Map(data, world_map_json) {     
 
+    console.log(data);
+    
     var div = "#map";
+    var countryList = [];
 
     //Scale map correctly on window resize
     d3.select(window).on("resize", sizeChange);
@@ -46,15 +49,68 @@ function Map(data, world_map_json) {
 
     //User filtering in GUI
     document.getElementById("filter").onclick = function(){
+        
+        var filterdData = [];
         var actor_type = document.getElementById("actors").value;
-        console.log(actor_type);
+
+        //Reset selections and charts
+        cancelSelection();
+        clearCharts();
+
+        //All actors means no filtering
+        if( actor_type == 'Default' ) {
+            document.getElementById('cancel-selection').style.opacity = 0;
+            return;
+        }
+        
+        //Filter data and only show points with selected actor type
+        document.getElementById('cancel-selection').style.opacity = 1;
+
+        //Show only filtered points, hide the rest
+        d3.selectAll('.point')
+            .style('opacity', '0');
+
+        d3.selectAll(".point[act='" + actor_type + "']")
+            .style("fill", "#c12424")
+            .style("opacity", "0.3");
+        
+        createCharts(actor_type, 'actor');
+
     }
 
     //Cancel selection button
     document.getElementById('cancel-selection').onclick = function(){
         cancelSelection();
         clearCharts();
+        resetGUI();
         this.style.opacity = 0;
+    }
+
+    //Search country form on submission
+    document.getElementById('country-search').onsubmit = function(e){
+        e.preventDefault(); //Prevent updating page
+        var val = document.forms["f"]["c"].value.toLowerCase(); //Get input value
+        var c = val[0].toUpperCase() + val.substring(1);
+
+        //Alert user if country does not exist in Africa or bad input
+        if( countryList.indexOf(val) == -1) {
+            alert(c + " isn't an African country! Try again.");
+            return;
+        }
+
+        //Selected searched country
+        cancelSelection();
+        clearCharts();
+        document.getElementById('cancel-selection').style.opacity = 1;
+        document.getElementById('country-name').innerHTML = c;
+        d3.select(".country[id='" + c + "']")
+            .style("stroke", "black")
+            .style("stroke-width", "2")
+            .style("fill", '#4485c4'); 
+
+        createCharts( c, 'country' );
+
+        
     }
 
     draw(countries);
@@ -68,21 +124,12 @@ function Map(data, world_map_json) {
             .attr("d", path)
             .attr("id", function(d){ 
                 d.properties.name = checkCountry(d.properties.name);
+                countryList.push(d.properties.name.toLowerCase());
                 return d.properties.name })
-            /*
-            .on("mousemove", function (d) {
-                d3.select(this)
-                .style("fill", '#4485c4');                
-            })
-            .on('mouseout',function(d){
-                d3.select(this)
-                .style("fill", '#66b3ff');
-
-            })
-            */
             .on('click', function(d){
                 
                 cancelSelection();
+                clearCharts();
                 document.getElementById('cancel-selection').style.opacity = 1;
                 document.getElementById('country-name').innerHTML = d.properties.name;
                 d3.select(this) 
@@ -90,7 +137,7 @@ function Map(data, world_map_json) {
                     .style("stroke-width", "2")
                     .style("fill", '#4485c4'); 
 
-                createCharts( this.id );
+                createCharts( this.id , 'country');
             });            
 
     }
@@ -128,6 +175,7 @@ function Map(data, world_map_json) {
         point.enter().append("path")
             .attr("class", "point")
             .attr("id", function(d){ return d.country })
+            .attr("act", function(d){ return d.actor })
             .attr("d", path)
             .attr("d", path.pointRadius(function (d) {
 
@@ -166,18 +214,29 @@ function Map(data, world_map_json) {
 
     }
 
-    function createCharts( country ) {
+    function createCharts( value, type_of_value ) {
 
         var filterdData = [];
 
-        var dd = d3.selectAll(".point[id='" + country + "']")
+        if(type_of_value == 'country') {
+        //Add data points only of the country
+        d3.selectAll(".point[id='" + value + "']")
             .style("opacity", function(d){
                 filterdData.push(d);
                 return "1";
             })
             .style('fill', "#fc2d2d");
 
-        //Create barchart with selected country data
+
+        } else if(type_of_value == 'actor') {
+            d3.selectAll(".point[act='" + value + "']")
+                .style('stroke', function(d){
+                    filterdData.push(d);
+                    return 'none';
+                });
+        }
+
+        //Create barchart with selected  data
         charts.createBarchart( filterdData );
         charts.createPiechart( filterdData );
 
@@ -204,11 +263,18 @@ function Map(data, world_map_json) {
             .style("stroke-width", "0.5");
 
         document.getElementById('info').innerHTML = ""; 
+        //document.getElementById('info-header').innerHTML = ""; 
         document.getElementById('country-name').innerHTML = ""; 
 
     }
 
+    function resetGUI(){
+        document.getElementById("actors").value = 'Default';
+    }
+
     function printInfo(d) {
+
+        //document.getElementById('info-header').innerHTML = "Information about this specific conflict"; 
                 
         document.getElementById('info').innerHTML = 
             "<p><b>Location:</b> " + d.location + ", " + d.country  + ". </p>" +
@@ -220,8 +286,14 @@ function Map(data, world_map_json) {
     }
 
     function clearCharts() {
-        document.getElementById('barchart').remove();  
-        document.getElementById('piechart').remove();  
+        let bar = document.getElementById('barchart'),
+            pie = document.getElementById('piechart');
+
+        if( bar != null && pie != null) {
+            bar.remove();  
+            pie.remove();  
+        }
+        
     }
 
 
