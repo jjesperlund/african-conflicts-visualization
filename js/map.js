@@ -107,8 +107,9 @@ function Map(data, world_map_json) {
 
         var color = d3.scaleQuantize()
         .domain([0,number_of_clusters])
-        .range(["#5E4FA2", "#3288BD", "#66C2A5", "#ABDDA4", "#E6F598",
-                "#FFFFBF", "#FEE08B", "#FDAE61", "#F46D43", "#D53E4F", "#9E0142"]);
+        .range(["#ABDDA4", "#E6F598",
+                "#FFFFBF", "#FEE08B", "#FDAE61", "#F46D43", 
+                "#D53E4F", "#9E0142"]);
 
         d3.selectAll('.point')
             .style('fill', function(d,j){

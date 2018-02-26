@@ -33,7 +33,7 @@
         <div class="row" id="container">
             
             <div class="col-sm-2" id="gui">
-                <p>Filter by actor</p>
+                <p><b>Filter by actor</b></p>
                 <select id="actors">
                     <option value="Default">Default</option>
                     <option value="Military Forces">Military Forces</option>
@@ -48,7 +48,10 @@
 
                   <button id="filter" onclick="map.filterData()">Filter</button>
 
-                  <p style="padding-top:20%;">Cluster the data with DBSCAN</p>
+                  <p style="padding-top:30%;"><b>Cluster the data with DBSCAN</b></p>
+                  
+                  <img id="cluster-description" src="images/cluster-scale.png" alt="cluster scale description">
+                  <p>min - max conflict density</p>
                   <button id="cluster" onclick="map.cluster()">Cluster</button>
             </div>
 
