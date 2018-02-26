@@ -76,6 +76,39 @@ function Map(data, world_map_json) {
 
     }
 
+    this.cluster = function(){
+        
+        let point_data = [];
+        filterdData.forEach(function(d){
+            point_data.push({
+                x: d.lon,
+                y: d.lat
+            });
+        });
+
+        var dbscanner = jDBSCAN().eps(2.2).minPts(80).distance('EUCLIDEAN').data(point_data);
+        var point_assignment_result = dbscanner();
+        var number_of_clusters = Math.max.apply(null, point_assignment_result);
+
+        var cluster_counts = {};
+        for (var i = 0; i < point_assignment_result.length; i++) {
+            let num = point_assignment_result[i];
+            cluster_counts[num] = cluster_counts[num] ? cluster_counts[num] + 1 : 1;
+        }
+
+        var color = d3.scaleLinear().domain([1, number_of_clusters])
+            .interpolate(d3.interpolateHcl)
+            .range([d3.rgb("#19ff5e"), d3.rgb('#f41d16')]);
+
+        d3.selectAll('.point')
+            .style('fill', function(d,j){
+                return color(Math.floor(cluster_counts[point_assignment_result[j]]/100));
+            });
+
+        console.log("Numbers of clusters: " + number_of_clusters);
+        
+    }
+
     //Cancel selection button
     document.getElementById('cancel-selection').onclick = function(){
         cancelSelection();
@@ -112,7 +145,7 @@ function Map(data, world_map_json) {
     }
 
     draw(countries);
-    drawPoints()
+    drawPoints();
 
     function draw(countries){
 
@@ -293,7 +326,6 @@ function Map(data, world_map_json) {
         }
         
     }
-
 
     function checkCountry(country){
         
