@@ -1,7 +1,8 @@
 
-function Map(data, world_map_json) {     
+function Map(data, world_map_json) {   
     
-    var div = "#map";
+    
+    this.div = "#map";
     var countryList = [];
 
     //Scale map correctly on window resize
@@ -18,7 +19,7 @@ function Map(data, world_map_json) {
         .on('zoom', move);
 
     //initialize tooltip
-    var tooltip = d3.select(div).append("div")
+    var tooltip = d3.select(this.div).append("div")
         .attr("class", "tooltip")
         .style("opacity", 0);
 
@@ -26,10 +27,10 @@ function Map(data, world_map_json) {
         .center([25, 20])
         .scale(600);
 
-    var path = d3.geoPath()
+    this.path = d3.geoPath()
         .projection(projection);
 
-    var svg = d3.select(div).append("svg")
+    var svg = d3.select(this.div).append("svg")
         .attr("width", "100%")
         .attr("height", "100%")
         .attr("id", "map-vis")
@@ -46,7 +47,7 @@ function Map(data, world_map_json) {
     var countries = g.selectAll(".country").data(countries_features);
 
     //User filtering in GUI
-    document.getElementById("filter").onclick = function(){
+    this.filterData = function(){
         
         var filterdData = [];
         var actor_type = document.getElementById("actors").value;
@@ -77,7 +78,11 @@ function Map(data, world_map_json) {
     }
 
     this.cluster = function(){
-        
+
+        cancelSelection();
+        clearCharts();
+        resetGUI();
+
         let point_data = [];
         filterdData.forEach(function(d){
             point_data.push({
@@ -90,24 +95,50 @@ function Map(data, world_map_json) {
         var point_assignment_result = dbscanner();
         var number_of_clusters = Math.max.apply(null, point_assignment_result);
 
-        var cluster_counts = {};
+        var cluster_counts = [];
         for (var i = 0; i < point_assignment_result.length; i++) {
             let num = point_assignment_result[i];
             cluster_counts[num] = cluster_counts[num] ? cluster_counts[num] + 1 : 1;
         }
 
-        var color = d3.scaleLinear().domain([1, number_of_clusters])
-            .interpolate(d3.interpolateHcl)
-            .range([d3.rgb("#19ff5e"), d3.rgb('#f41d16')]);
+
+        cluster_counts = scaleCounts(cluster_counts);
+
+
+        var color = d3.scaleQuantize()
+        .domain([0,number_of_clusters])
+        .range(["#5E4FA2", "#3288BD", "#66C2A5", "#ABDDA4", "#E6F598",
+                "#FFFFBF", "#FEE08B", "#FDAE61", "#F46D43", "#D53E4F", "#9E0142"]);
 
         d3.selectAll('.point')
             .style('fill', function(d,j){
-                return color(Math.floor(cluster_counts[point_assignment_result[j]]/100));
+                if(point_assignment_result[j] == 0){
+                    return 'rgba(0,0,0,0)';
+                }
+                return color((cluster_counts[point_assignment_result[j]]));
             });
 
         console.log("Numbers of clusters: " + number_of_clusters);
-        
+        document.getElementById('cancel-selection').style.opacity = 1;
+
     }
+
+
+    function scaleCounts(cluster_counts){
+
+      cluster_counts_scaled = [];
+      var maxCount = Math.max.apply(null, cluster_counts);
+      var minCount = Math.min.apply(null, cluster_counts);
+      var a = 0;
+      var b = cluster_counts.length;
+
+        for(var k = 0; k<cluster_counts.length;k++){
+            cluster_counts_scaled[k] = ((b-a)*(cluster_counts[k] - minCount))/(maxCount - minCount) + a;
+        }
+
+        return cluster_counts_scaled;
+    }
+
 
     //Cancel selection button
     document.getElementById('cancel-selection').onclick = function(){
@@ -140,25 +171,20 @@ function Map(data, world_map_json) {
             .style("fill", '#4485c4'); 
 
         createCharts( c, 'country' );
-
         
     }
 
-    draw(countries);
-    drawPoints();
-
-    function draw(countries){
+    this.draw = function(countries) {
 
         countries.enter()
             .insert("path")
             .attr("class", "country")
-            .attr("d", path)
+            .attr("d", this.path)
             .attr("id", function(d){ 
                 d.properties.name = checkCountry(d.properties.name);
                 countryList.push(d.properties.name.toLowerCase());
                 return d.properties.name })
             .on('click', function(d){
-                
                 cancelSelection();
                 clearCharts();
                 document.getElementById('cancel-selection').style.opacity = 1;
@@ -167,39 +193,14 @@ function Map(data, world_map_json) {
                     .style("stroke", "black")
                     .style("stroke-width", "2")
                     .style("fill", '#4485c4'); 
-
+    
                 createCharts( this.id , 'country');
             });            
-
-    }
-
-    //Formats the data in a feature collection
-    function geoFormat(array) {
-        var data = [];
-
-        array.map(function (d, i) {
-            data.push({
-                "id": d.id,
-                "type": "Feature",
-                "geometry": {
-                    "coordinates": [d.lon, d.lat], 
-                    "type": "Point",
-                },
-                "fatalities": d.fatalities,
-                "location": d.location,
-                "country": d.country,
-                "date": d.date,
-                "description": d.description,
-                "event_type": d.event_type,
-                "actor": d.actor
-            });
-        });
-        
-        return data;
+    
     }
 
     //Draws the map and the points
-    function drawPoints(){
+    this.drawPoints = function() {
         
         var point = g.selectAll(".point").data(geoData.features);
 
@@ -207,8 +208,8 @@ function Map(data, world_map_json) {
             .attr("class", "point")
             .attr("id", function(d){ return d.country })
             .attr("act", function(d){ return d.actor })
-            .attr("d", path)
-            .attr("d", path.pointRadius(function (d) {
+            .attr("d", this.path)
+            .attr("d", this.path.pointRadius(function (d) {
 
                 //Mapping radius values to 5 to 13
                 return 5 + ( ( (d.fatalities - 0)*(50-5) ) /
@@ -245,6 +246,10 @@ function Map(data, world_map_json) {
 
     }
 
+    this.draw(countries);
+    this.drawPoints();
+   
+
     function createCharts( value, type_of_value ) {
 
         var filterdData = [];
@@ -276,77 +281,6 @@ function Map(data, world_map_json) {
     function move() {
         g.style("stroke-width", 1.5 / d3.event.transform.k + "px");
         g.attr("transform", d3.event.transform);
-    }
-
-    function sizeChange() {
-	    d3.select("g").attr("transform", "scale(" + $("#container").width()/1700 + ")");
-	    $("svg").height($("#container").width()*0.618);
-    }
-    
-    function cancelSelection() {
-        d3.selectAll('.point')
-            .style('opacity', 0.3)
-            .style('fill', '#c12424')
-            .style("stroke", 'none');
-
-        d3.selectAll('.country')
-            .style("fill", "#66b3ff")
-            .style("stroke-width", "0.5");
-
-        document.getElementById('info').innerHTML = ""; 
-        //document.getElementById('info-header').innerHTML = ""; 
-        document.getElementById('country-name').innerHTML = ""; 
-
-    }
-
-    function resetGUI(){
-        document.getElementById("actors").value = 'Default';
-    }
-
-    function printInfo(d) {
-
-        //document.getElementById('info-header').innerHTML = "Information about this specific conflict"; 
-                
-        document.getElementById('info').innerHTML = 
-            "<p><b>Location:</b> " + d.location + ", " + d.country  + ". </p>" +
-            "<p><b>Date: </b>" + d.date.toString().substr(0,16) + "</p>"
-            + "<p><b>Conflict Type:</b> " + d.event_type + "</p>" +
-            "<p><b>Fatalities:</b> " + d.fatalities + "</br></p>" 
-            + "<p>" + d.description + "</p>";
-
-    }
-
-    function clearCharts() {
-        let bar = document.getElementById('barchart'),
-            pie = document.getElementById('piechart');
-
-        if( bar != null && pie != null) {
-            bar.remove();  
-            pie.remove();  
-        }
-        
-    }
-
-    function checkCountry(country){
-        
-        switch(country){
-
-            case 'Congo, the Democratic Republic of the' : 
-                country = 'Democratic Republic of Congo';
-                break;
-            case 'Tanzania, United Republic of' : 
-                country = 'Tanzania';
-                break;
-            case "Côte d'Ivoire" :
-                country = 'Ivory Coast';
-                break;
-                 
-            default: break;
-
-
-        }
-        return country;
-
     }
 
 }

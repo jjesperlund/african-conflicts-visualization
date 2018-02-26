@@ -57,7 +57,15 @@ function parseActor( actor ) {
         return 'undefined'; 
 
     let actors = ['Military Forces', 'Police Forces','Militia',
-                  'Protesters', 'Rioters', 'Civilians'];
+                  'Protesters', 'Rioters', 'Civilians', 'United Nations'];
+
+    let terroristGroups = ['Islamic State', 'Al Shabaab', 'Boko Haram', 'Unidentified Armed Group', 'State of Sinai'
+                            , 'Hasam Movement', 'Muslim Brotherhood', 'Anti-Balaka'];
+    for(let i = 0; i < terroristGroups.length; i++) {
+        if( actor.includes(terroristGroups[i]) ) {
+            return 'Terrorist Group';
+        }
+    }
 
     for(let i = 0; i < actors.length; i++) {
         if( actor.includes(actors[i]) ) {

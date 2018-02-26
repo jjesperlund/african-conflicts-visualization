@@ -120,7 +120,7 @@ select {
     font-family: 'Raleway';
 }
 
-button#filter {
+button#filter, button#cluster {
     width: 100px;
     height: 40px;
     background-color: #66b3ffbb;
@@ -129,8 +129,12 @@ button#filter {
     border: none;
     border-radius: 4px;
     margin-left: 25%;
-    margin-top: 15%;
+    margin-top: 13%;
     font-family: 'Raleway';
+}
+
+button#cluster {
+    margin-top:2%;
 }
 
 button#filter:hover {
