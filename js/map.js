@@ -79,6 +79,10 @@ function Map(data, world_map_json) {
 
     this.cluster = function(){
 
+        //Show conflict density scale in map window
+        document.getElementById('cluster-description').style.opacity = 1;
+        document.getElementById('cluster-scale').style.opacity = 1;
+
         cancelSelection();
         clearCharts();
         resetGUI();
@@ -143,6 +147,15 @@ function Map(data, world_map_json) {
 
     //Cancel selection button
     document.getElementById('cancel-selection').onclick = function(){
+
+        //Reset search form
+        document.getElementsByClassName('searchTerm')[0].value = "";
+        document.getElementsByClassName('searchTerm')[0].placeholder = 'Search country..';
+
+        //Hide conflict density scale in map window
+        document.getElementById('cluster-description').style.opacity = 0;
+        document.getElementById('cluster-scale').style.opacity = 0;
+
         cancelSelection();
         clearCharts();
         resetGUI();

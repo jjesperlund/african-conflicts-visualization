@@ -59,7 +59,7 @@
             <div class="wrap">
                 <div class="search">
                    <form name="f" id="country-search">
-                   <input type="text" class="searchTerm" name="c" placeholder="Search country">
+                   <input type="search" class="searchTerm" name="c" placeholder="Search country..">
                    <button type="submit" class="searchButton">
                      <i class="fa fa-search"></i>
                   </button>
@@ -86,14 +86,22 @@
 
                   <button id="filter" onclick="map.filterData()">Filter</button>
 
+<<<<<<< HEAD
                   <p style="padding-top:30%;"><b>Cluster the data with DBSCAN</b></p>
 
                   <img id="cluster-description" src="images/cluster-scale.png" alt="cluster scale description">
                   <p>min - max conflict density</p>
+=======
+                  <p style="padding-top:30%;"><b>View conflict density using clustering</b></p>
+                
+>>>>>>> 26454e4ea4f949c09745fc48af4ca953cb617059
                   <button id="cluster" onclick="map.cluster()">Cluster</button>
             </div>
 
-            <div class="col-sm-6" id="map"></div>
+            <div class="col-sm-6" id="map">
+                <img id="cluster-description" src="images/cluster-scale.png" alt="cluster scale description">
+                <p id="cluster-scale">min - max conflict density</p>
+            </div>
             <div class="col-sm-4" id="charts">
                 <p class="glyphicon glyphicon-remove" id="cancel-selection"></p>
 
