@@ -1,18 +1,18 @@
 
-function Map(data, world_map_json) {   
-    
-    
+function Map(data, world_map_json) {
+
+
     this.div = "#map";
     var countryList = [];
 
     //Scale map correctly on window resize
     d3.select(window).on("resize", sizeChange);
-    
+
     //Sets the colormap
     var colors = colorbrewer.Set3[10];
 
-    var filterdData = data;    
-    
+    var filterdData = data;
+
     //initialize zoom
     var zoom = d3.zoom()
         .scaleExtent([1, 20])
@@ -48,7 +48,7 @@ function Map(data, world_map_json) {
 
     //User filtering in GUI
     this.filterData = function(){
-        
+
         var filterdData = [];
         var actor_type = document.getElementById("actors").value;
 
@@ -61,7 +61,7 @@ function Map(data, world_map_json) {
             document.getElementById('cancel-selection').style.opacity = 0;
             return;
         }
-        
+
         //Filter data and only show points with selected actor type
         document.getElementById('cancel-selection').style.opacity = 1;
 
@@ -72,7 +72,7 @@ function Map(data, world_map_json) {
         d3.selectAll(".point[act='" + actor_type + "']")
             .style("fill", "#c12424")
             .style("opacity", "0.3");
-        
+
         createCharts(actor_type, 'actor');
 
     }
@@ -108,7 +108,7 @@ function Map(data, world_map_json) {
         var color = d3.scaleQuantize()
         .domain([0,number_of_clusters])
         .range(["#ABDDA4", "#E6F598",
-                "#FFFFBF", "#FEE08B", "#FDAE61", "#F46D43", 
+                "#FFFFBF", "#FEE08B", "#FDAE61", "#F46D43",
                 "#D53E4F", "#9E0142"]);
 
         d3.selectAll('.point')
@@ -169,10 +169,10 @@ function Map(data, world_map_json) {
         d3.select(".country[id='" + c + "']")
             .style("stroke", "black")
             .style("stroke-width", "2")
-            .style("fill", '#4485c4'); 
+            .style("fill", '#4485c4');
 
         createCharts( c, 'country' );
-        
+
     }
 
     this.draw = function(countries) {
@@ -181,7 +181,7 @@ function Map(data, world_map_json) {
             .insert("path")
             .attr("class", "country")
             .attr("d", this.path)
-            .attr("id", function(d){ 
+            .attr("id", function(d){
                 d.properties.name = checkCountry(d.properties.name);
                 countryList.push(d.properties.name.toLowerCase());
                 return d.properties.name })
@@ -190,19 +190,19 @@ function Map(data, world_map_json) {
                 clearCharts();
                 document.getElementById('cancel-selection').style.opacity = 1;
                 document.getElementById('country-name').innerHTML = d.properties.name;
-                d3.select(this) 
+                d3.select(this)
                     .style("stroke", "black")
                     .style("stroke-width", "2")
-                    .style("fill", '#4485c4'); 
-    
+                    .style("fill", '#4485c4');
+
                 createCharts( this.id , 'country');
-            });            
-    
+            });
+
     }
 
     //Draws the map and the points
     this.drawPoints = function() {
-        
+
         var point = g.selectAll(".point").data(geoData.features);
 
         point.enter().append("path")
@@ -222,7 +222,7 @@ function Map(data, world_map_json) {
             .style("stroke", "none")
             .on("mousemove", function (d) {
                 //d3.select(this)
-                //.style('opacity',1);               
+                //.style('opacity',1);
             })
             .on('mouseout',function(d){
 
@@ -235,7 +235,7 @@ function Map(data, world_map_json) {
 
                 cancelSelection();
                 clearCharts();
-                printInfo(d);                
+                printInfo(d);
 
                 d3.select(this)
                     .style('opacity', 1)
@@ -249,7 +249,7 @@ function Map(data, world_map_json) {
 
     this.draw(countries);
     this.drawPoints();
-   
+
 
     function createCharts( value, type_of_value ) {
 
@@ -283,5 +283,8 @@ function Map(data, world_map_json) {
         g.style("stroke-width", 1.5 / d3.event.transform.k + "px");
         g.attr("transform", d3.event.transform);
     }
+
+
+
 
 }

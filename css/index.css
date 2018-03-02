@@ -25,7 +25,7 @@ html,body,.col-md-12,.row {
     height: 10%;
     border-bottom: 4px solid rgba(0, 0, 0, 0.3);
     border-style: double;
-    
+
 }
 #navbar h1 {
     top: 3%;
@@ -62,7 +62,7 @@ html,body,.col-md-12,.row {
     color: #e6f3ff;
     font-family: 'Raleway';
     font-size: 15px;
-     
+
 }
 
 /* Search bar */
@@ -70,7 +70,7 @@ html,body,.col-md-12,.row {
     width: 100%;
     position: relative
   }
-  
+
 .searchTerm {
     float: left;
     width: 100%;
@@ -88,7 +88,7 @@ html,body,.col-md-12,.row {
 }
 
 .searchButton {
-    position: absolute;  
+    position: absolute;
     right: -50px;
     width: 40px;
     height: 36px;
@@ -149,8 +149,8 @@ button#filter:hover {
     border-left: 4px solid rgba(0, 0, 0, 0.3);
     border-style: double;
 }
-#container .col-sm-4 { 
-    
+#container .col-sm-4 {
+
 }
 
 #cluster-description {

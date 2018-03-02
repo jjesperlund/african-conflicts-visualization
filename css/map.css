@@ -10,7 +10,7 @@
 
 path {
     stroke: #333333;
-    stroke-width: 0.5px;    
+    stroke-width: 0.5px;
 }
 
 .country {
@@ -42,7 +42,3 @@ p.glyphicon-remove {
 #map img:hover {
     cursor: pointer;
 }
-
-
-
-  
