@@ -1,133 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Conflicts in Africa Past 6 Months</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<html>
+  <head>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Architects+Daughter|Rock+Salt" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Conflicts in Africa Past 6 Months</title>
+    <script>
+        function redirect() {
+            console.log('Loading visualization..');
+            setTimeout(function () {
+                window.location = "application.html"; 
+            }, 4000); 
+        }
+    </script>
+    <style>
+            body {
+                background-color: #333333;
+            }
+            h1 {
+                color: #e6f3ff;
+                text-align: center;
+                font-size: 50px;
+                margin-top: 25%;
+                font-family: 'Architects Daughter';
+            }
+            p {
+                color: #e6f3ff;;
+                text-align: center;   
+                opacity: 0.9;     
+                margin-top: 3%;        
+                font-size: 20px;
+                font-family: 'Raleway';
+            }
+            .w3-dark-gray {
+                width: 30%;
+                height: 15px;
+                margin: auto;
+                border-radius: 15px;
+                margin-top: 3%;
+            }
+            .w3-blue{
+                height: 15px;
+                border-radius: 15px;
+                animation: load 4s;
+            }
+            @keyframes load {
+                from {width: 0%;}
+                to {width:100%}
+            }
 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-  <link rel="stylesheet" href="./css/index.css">
-  <link rel="stylesheet" href="./css/map.css">
-  <link rel="stylesheet" href="./css/charts.css">
-  <link rel="stylesheet" href="./css/modal.css">
-
-</head>
-<body>
-
-
-
-    <!-- The Modal -->
-<div id="myModal" class="modal">
-
-    <!-- Modal content -->
-    <div class="modal-content">
-      <div class="modal-header">
-        <span class="close">&times;</span>
-        <h2>Information</h2>
-      </div>
-
-      <div class="modal-body">
-              <p>The purpose of this application is to visualize the conflicts that has happend in Africa over the past 6 months.
-                 The dataset we are using has 9000 different samples, each representing a conflict that has occured the last 6 months in Africa.
-                 Each conflict has a date, location, type of conflict, a number of fatalites that is mapped to the size of the radius and an actor. An actor is always a group that in someway has been involved in the conflict.
-               </p>
-              <p>You can navigate through the application by either selcting a country or conflict with your mouse.
-                 If you want to look for a country that you do not know the location of, try the search bar at the top right corner.
-                 You can cluster the dataset using a datamining algorithm called DCSCAN. We cluster the data using the geographical location the conflicts has.
-                 You can also filter the data by using the filter button at the top left corner.
-              </p>
-      </div>
-      <div class="modal-footer">
-          <h3>HINTS</h3>
-          <p> Try look for relationships that might interest you. For example:
-            What is the most common conflict type in Somalia?
-            Where in Africa is UN mostly involved in conflicts?
-            Where is the most denst in conflicts in Africa? "Using DBSCAN"
-            How has the number of conflict changed in Sudan over the past 6 months?
-            Have fun!
-      </div>
-    </div>
-
-  </div>
-
-
-    <div class="col-md-12">
-        <div class="row" id="navbar">
-            <h1>Conflicts in Africa Past 6 Months <button id="myBtn"><i class="fa fa-question"></i></button></h1>
-            
-            <div class="wrap">
-                <div class="search">
-                   <form name="f" id="country-search">
-                   <input type="search" class="searchTerm" name="c" placeholder="Search country..">
-                   <button type="submit" class="searchButton">
-                     <i class="fa fa-search"></i>
-                  </button>
-                  </form>
-                </div>
-             </div>
+    </style>
+  </head>
+  <body onload="redirect()">
+         
+        <h1>Conflicts in Africa Past 6 Months</h1>
+        <p>Loading the data...</p>
+        <div class="w3-dark-gray">
+                <div class="w3-blue"></div>
         </div>
 
-        <div class="row" id="container">
-
-            <div class="col-sm-2" id="gui">
-                <p><b>Filter by actor</b></p>
-                <select id="actors">
-                    <option value="Default">Default</option>
-                    <option value="Military Forces">Military Forces</option>
-                    <option value="Terrorist Group">Terrorist Groups</option>
-                    <option value="Police Forces">Police Forces</option>
-                    <option value="United Nations">United Nations (UN)</option>
-                    <option value="Militia">Militias</option>
-                    <option value="Protesters">Protesters</option>
-                    <option value="Rioters">Rioters</option>
-                    <option value="Civilians">Civilians</option>
-                  </select>
-
-                  <button id="filter" onclick="map.filterData()">Filter</button>
-
-                  <p style="padding-top:30%;"><b>View conflict density using clustering</b></p>
-
-                <button id="cluster" onclick="map.cluster()">Cluster</button>
-            </div>
-
-            <div class="col-sm-6" id="map">
-                <img id="cluster-description" src="images/cluster-scale.png" alt="cluster scale description">
-                <p id="cluster-scale">min - max conflict density</p>
-            </div>
-            <div class="col-sm-4" id="charts">
-                <p class="glyphicon glyphicon-remove" id="cancel-selection"></p>
-
-                <h2 id="country-name"></h2>
-                <!--<h2 id="info-header"></h2>-->
-                <p id="info"></p>
-                    <canvas id="barchart" width="350" height="270"></canvas>
-                    <canvas id="piechart" width="400" height="270"></canvas>
-            </div>
-        </div>
-    </div>
-
-    <!-- Includes -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://d3js.org/d3.v4.min.js"></script>
-    <script src="http://d3js.org/topojson.v2.min.js"></script>
-    <script src="./lib/queue.js" type='text/javascript'></script>
-    <script src="./lib/colorbrewer.js" type='text/javascript'></script>
-    <script src="./lib/chart.min.js" type='text/javascript'></script>
-    <script src="./lib/dbscan.js" type='text/javascript'></script>
-
-
-
-    <!-- Modules -->
-    <script src="js/main.js" type="text/javascript"></script>
-    <script src="js/helpers.js" type="text/javascript"></script>
-    <script src ="js/map.js" type="text/javascript"></script>
-    <script src ="js/charts.js" type="text/javascript"></script>
-    <script src="js/modal.js" type ="text/javascript"></script>
-
-
-
-</body>
+  </body>
 </html>
