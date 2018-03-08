@@ -24,6 +24,7 @@ function geoFormat(array) {
     return data;
 }
 
+//Change geo-visualization size on window size change
 function sizeChange() {
     d3.select("g").attr("transform", "scale(" + $("#container").width()/1700 + ")");
     $("svg").height($("#container").width()*0.618);
@@ -34,8 +35,6 @@ function resetGUI(){
 }
 
 function printInfo(d) {
-
-    //document.getElementById('info-header').innerHTML = "Information about this specific conflict"; 
             
     document.getElementById('info').innerHTML = 
         "<p><b>Location:</b> " + d.location + ", " + d.country  + ". </p>" +
@@ -46,6 +45,7 @@ function printInfo(d) {
 
 }
 
+//Clear charts
 function clearCharts() {
     let bar = document.getElementById('barchart'),
         pie = document.getElementById('piechart');
@@ -57,6 +57,7 @@ function clearCharts() {
     
 }
 
+// Reset the geo-visualization points and countries
 function cancelSelection() {
     d3.selectAll('.point')
         .style('opacity', 0.3)

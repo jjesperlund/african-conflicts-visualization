@@ -31,7 +31,7 @@ function parseData(data){
     //Parse dates
     var format = d3.timeParse("%Y-%m-%d");
 
-    //Parse some data parameters
+    //Parse raw data
     data.forEach(function(d){
         filteredData.push({
             "lat": +d.latitude,
@@ -51,6 +51,7 @@ function parseData(data){
     return filteredData;
 }
 
+//Group actors to be able to filter by actor
 function parseActor( actor ) {
 
     if( actor == undefined)
@@ -77,6 +78,7 @@ function parseActor( actor ) {
 
 }
 
+//Extract the African map from a world map
 function filterTopoJson( map, africa_countries ) {
 
     var selected_countries = [];

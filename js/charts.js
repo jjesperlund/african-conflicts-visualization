@@ -50,15 +50,16 @@ function Charts() {
 
         }
 
+        //If x and y data empty, return
         if(event_types.length == 0) return;
 
+        //Create the barchart object
         var barchart = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: event_types.map(a => a.event),
                 datasets: [{
                     label: 'Number of events',
-                    //data: [12, 19, 3, 5, 2, 3], //Y-axis
                     data: event_types.map(a => a.count),
                     backgroundColor: [
                         'rgba(99, 255, 97, 0.4)',
@@ -126,6 +127,7 @@ function Charts() {
     }
 
     this.createPiechart = function( country_data ) {
+
         //Init arrays for x and y data
         let months = [];            
         country_data.forEach(function(d, i){
@@ -146,8 +148,6 @@ function Charts() {
             console.log("No information of this country")
         }    
 
-        //console.log(months)
-
         //Redraw barchart if a barchart already is drawn
         if( ctx ) {
             let w = ctx.width, h = ctx.height;
@@ -165,6 +165,7 @@ function Charts() {
 
         if(months.length == 0) return;
 
+        //Create linechart object
         var piechart = new Chart(ctx, {
             type: 'line',
             data: {
@@ -218,6 +219,7 @@ function Charts() {
         });
     }
 
+    // Function to not add duplicates in x and y data arrays
     function contains(array, type, chartType) {
         let index = -1;
         array.forEach(function(d, i){
