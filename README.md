@@ -1,4 +1,4 @@
-## Visualization of Conflicts in Africa 2017-2018
+## Visualization of African Conflicts Past 6 Months
 
 Demo: https://jjesperlund.github.io/african-conflicts-visualization
 (for best experience use Safari)
